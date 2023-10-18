@@ -1,0 +1,28 @@
+Danae Troupe
+Doctor's Office Project: Algorithm
+Tuesday, October 17, 2023
+
+PROGRAM START
+1. Main runs and window opens
+1a. Initalize all singleton objects (Appointments, Patients, Rooms, Doctors)
+2. Menu function will execute from main. This displays a series of buttons based on the button class. They are labeled as following:
+  - Load Office Data
+  - Add New Patient
+  - Add new doctor
+  - View Patient queue summary
+  - Show doctor summary 
+  - Checkout patient
+  - Close office
+Each button is loaded with appropriate data. 
+
+3. Player will click on a button to select a menu option and will create a new page object and load with information based on the case.
+3a. Log to "OfficeHistory.txt"
+
+3a. Load Office Data: INPUT: pointer to Patients, Doctors, and Rooms object (singleton). Request input from player to give filename. If file does not exist, display error message. Otherwise load gui with all doctor, patient, and room information. Loop and read from file and create new appropriate class instances. Display two buttons at bottom. If selects "Accept", add Patient objects to singleton patients info in patients class. Do the same for doctors and room numbers. Else, return to main loop. All page objects have a return to menu button that allows to return to main loop. Log selection to "OfficeHistory.tx"
+
+3b. Add New Patient: INPUT: pointer to Patients. | There will be several input fields that accept strings from user. There will be return to main loop button and enter button. Add to Patient info from Patients object AND add to "queue" in patients object by deploying appropriate methods. If user tries to not fill required fields an error message will display and object will not be created. If it is created then fields will clear so that user can add another user. 
+3c. Add new Doctor: Same as above except input is pointer to Doctors object. 
+3d. View Patient queue summary: INPUT: pointer to patients object, pointer to Rooms object | Loop through patients object queue and display patient's name and arrival time. Then display a button at the bottom stating "Assign Patients". The first patient in the queue will show at top. Clicking on a room then clicking "Assign" button will run assignToRoom method and assignToPatient method to link the room and patient. Player will be removed from queue. 
+3e. Return unoccupied doctors from doctors class and show buttons. Return occupied doctors in different color. Buttons are clickable. Clicking on an unoccuppied doctor will pull up a list of appointments. Adding to appointment will move doctor to occupied list, refesh view, and put doctor on assignment. 
+3f. Return appointments from appointments class. Call show menu. Click appointment to check out. More information is shown. Show price based on get insurance from patient and get appointment type from appointment. Clicking check out will call request for balance and display. 
+3e. Loop through all doctors from doctors class and get account balances and number of patients seen. Write to "OfficeHistory.txt"

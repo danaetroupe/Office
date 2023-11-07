@@ -1,21 +1,23 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <regex>
 using namespace std;
 
 class ErrorHandler
 {
 public:
-	ErrorHandler();
-	ErrorHandler(string errorCode);
+	enum FLAGS { ERROR_NAME_INVALID, ERROR_ADDRESS_INVALID, ERROR_CITY_INVALID, ERROR_EMAIL_INVALID, ERROR_ZIPCODE_INVALID, ERROR_PHONE_INVALID };
 
 	bool getErrorStatus();
-	vector<string> getErrorCodes();
+	vector<FLAGS> getErrorCodes();
+	vector<string> getErrorDisplays();
 	
-	void addErrorCode(string code);
+	void addErrorCode(FLAGS flag);
 	void clearErrorCodes();
 private:
-	bool hasError;
-	vector<string> errorCodes;
+	bool errorStatus = false;
+	vector<FLAGS> errorCodes;
+	vector<string> errorDisplays;
 };
 

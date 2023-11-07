@@ -7,17 +7,19 @@ using namespace std;
 
 #include "Patient.h"
 
-class Patients
+namespace Patients
 {
-	queue<Patient*> waitingRoom;
-	map<int, Patient*> currentAppointments;
-	set<int> patientIds;
-public:
+	/*extern queue<Patient*> waitingRoom;
+	extern map<int, Patient*> currentAppointments;
+	extern set<int> patientIds;*/
+
 	int generateUniqueId();
 	Patient* getFirstPatient();
 	vector<Patient*> showCurrentAppointments();
 	
 	void addToQueue(Patient*);
 	void removePatientFromQueue();
+
+	void deallocateMemory();
 };
 

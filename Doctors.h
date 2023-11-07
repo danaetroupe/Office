@@ -15,6 +15,6 @@ public:
 	Doctors();
 	~Doctors();
 	
-	void addNewDoctor(string, string, string, string, int, int, string);
+	void addNewDoctor(string, string, string, string, string, string, string, ErrorHandler*);
 };
 

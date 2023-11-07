@@ -4,7 +4,7 @@
 class Doctor : Person
 {
 public:
-	Doctor(string, string, string, string, int, int, string);
+	Doctor(string, string, string, string, int, int, string, ErrorHandler* = nullptr);
 	float getBalance();
 };
 

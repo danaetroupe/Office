@@ -26,8 +26,6 @@ protected:
 public:
 	Person(string, string, string, Address*, ErrorHandler*);
 	~Person();
-	
-	pair<bool, vector<string>> getErrors();
 
 	string getName() { return name; }
 	string getAddress() { return address->address; }

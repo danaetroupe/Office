@@ -15,6 +15,11 @@ public:
 	
 	void addErrorCode(FLAGS flag);
 	void clearErrorCodes();
+
+	void checkName(string name);
+	void checkEmail(string email);
+	void checkAddress(string address, string zip);
+	void checkNumber(string phone);
 private:
 	bool errorStatus = false;
 	vector<FLAGS> errorCodes;

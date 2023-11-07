@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
+    <ClInclude Include="AddDoc.h" />
     <ClInclude Include="Appointment.h" />
     <ClInclude Include="Doctor.h" />
     <ClInclude Include="Doctors.h" />
@@ -142,6 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="AddDoc.cpp" />
+    <ClCompile Include="AddPat.cpp" />
+    <ClCompile Include="AddPatient.cpp" />
     <ClCompile Include="Appointment.cpp" />
     <ClCompile Include="Doctor.cpp" />
     <ClCompile Include="Doctors.cpp" />

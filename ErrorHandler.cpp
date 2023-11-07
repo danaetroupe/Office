@@ -17,31 +17,55 @@ void ErrorHandler::clearErrorCodes()
     errorStatus = false;
 }
 
+void ErrorHandler::checkName(string name) {
+    if (!regex_match(name, regex("[a-zA-Z]+"))) {
+        addErrorCode(ERROR_NAME_INVALID);
+    }
+}
+
+void ErrorHandler::checkEmail(string email) {
+    if (!regex_match(email, regex("[a-zA-Z0-9_]+@[a-zA-Z]+.[a-ZA-Z]+"))) {
+        addErrorCode(ERROR_EMAIL_INVALID);
+    }
+}
+
+void ErrorHandler::checkAddress(string address, string zip) {
+    if (!regex_match(address, regex("[0-9][0-9]*[a-zA-Z]")) || !regex_match(zip, regex("[0-9]+"))) {
+        addErrorCode(ERROR_ADDRESS_INVALID);
+    }
+}
+
+void ErrorHandler::checkNumber(string phone) {
+    if (!regex_match(phone, regex("[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"))) {
+        addErrorCode(ERROR_PHONE_INVALID);
+    }
+}
+
 void ErrorHandler::addErrorCode(FLAGS flag) {
     errorStatus = true;
     errorCodes.push_back(flag);
     string display;
     switch (flag) {
     case(ERROR_ADDRESS_INVALID):
-        display = "Address invalid.";
+        display = "INVALID ADDRESS";
         break;
     case(ERROR_CITY_INVALID):
-        display = "City invalid.";
+        display = "INVALID CITY";
         break;
     case(ERROR_EMAIL_INVALID):
-        display = "Email invalid.";
+        display = "INVALID EMAIL";
         break;
     case(ERROR_NAME_INVALID):
-        display = "Name invalid.";
+        display = "INVALID NAME";
         break;
     case(ERROR_PHONE_INVALID):
-        display = "Phone invalid.";
+        display = "INVALID PHONE";
         break;
     case(ERROR_ZIPCODE_INVALID):
-        display = "Zip code invalid.";
+        display = "INVALID ZIP";
         break;
     default:
-        display = "Error code not recognized";
+        display = "ERROR CODE NOT RECOGNIZED";
     }
     errorDisplays.push_back(display);
 }

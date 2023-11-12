@@ -130,7 +130,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
-    <ClInclude Include="AddDoc.h" />
     <ClInclude Include="Appointment.h" />
     <ClInclude Include="Doctor.h" />
     <ClInclude Include="Doctors.h" />
@@ -140,12 +139,9 @@
     <ClInclude Include="Patient.h" />
     <ClInclude Include="Patients.h" />
     <ClInclude Include="Person.h" />
+    <ClInclude Include="Time.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Account.cpp" />
-    <ClCompile Include="AddDoc.cpp" />
-    <ClCompile Include="AddPat.cpp" />
-    <ClCompile Include="AddPatient.cpp" />
     <ClCompile Include="Appointment.cpp" />
     <ClCompile Include="Doctor.cpp" />
     <ClCompile Include="Doctors.cpp" />
@@ -155,9 +151,7 @@
     <ClCompile Include="Patient.cpp" />
     <ClCompile Include="Patients.cpp" />
     <ClCompile Include="Person.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

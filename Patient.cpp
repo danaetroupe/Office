@@ -5,6 +5,10 @@ Patient::Patient(string name, string number, string email, string insurance, Add
 	this->insurance = insurance;
 }
 
+Patient::Patient(vector<string> input, ErrorHandler* handler) {
+
+}
+
 Patient::~Patient() {
 	delete address;
 	delete birthDate;

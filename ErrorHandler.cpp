@@ -1,4 +1,6 @@
 #include "ErrorHandler.h"
+#include <fstream>
+using namespace std;
 
 bool ErrorHandler::getErrorStatus()
 {
@@ -24,21 +26,30 @@ void ErrorHandler::checkName(string name) {
 }
 
 void ErrorHandler::checkEmail(string email) {
-    if (!regex_match(email, regex("[a-zA-Z0-9_]+@[a-zA-Z]+.[a-ZA-Z]+"))) {
+    if (!regex_match(email, regex("[a-zA-Z0-9_]+@[a-zA-Z]+.[a-zA-Z]+"))) {
         addErrorCode(ERROR_EMAIL_INVALID);
     }
 }
 
 void ErrorHandler::checkAddress(string address, string zip) {
-    if (!regex_match(address, regex("[0-9][0-9]*[a-zA-Z]")) || !regex_match(zip, regex("[0-9]+"))) {
+    if (!regex_match(address, regex("[0-9]* [a-zA-Z]*")) || !regex_match(zip, regex("[0-9]+"))) {
         addErrorCode(ERROR_ADDRESS_INVALID);
     }
 }
 
 void ErrorHandler::checkNumber(string phone) {
-    if (!regex_match(phone, regex("[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"))) {
+    if (!regex_match(phone, regex("[0-9]{10}"))) {
         addErrorCode(ERROR_PHONE_INVALID);
     }
+}
+
+void ErrorHandler::checkFile(string name) {
+    ifstream file;
+    file.open(name);
+    if (!file) {
+        addErrorCode(ERROR_FILE_INVALID);
+    }
+    file.close()
 }
 
 void ErrorHandler::addErrorCode(FLAGS flag) {
@@ -63,6 +74,9 @@ void ErrorHandler::addErrorCode(FLAGS flag) {
         break;
     case(ERROR_ZIPCODE_INVALID):
         display = "INVALID ZIP";
+        break;
+    case(ERROR_FILE_INVALID):
+        display = "INVALID FILE NAME";
         break;
     default:
         display = "ERROR CODE NOT RECOGNIZED";

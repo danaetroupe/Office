@@ -82,20 +82,20 @@ void loadData() {
 			case(0):
 				while (!correct) {
 					std::cout << "DOCTOR" << endl;
-					std::cout << "1) FIRST NAME: "; helpPrint(results, 0);
-					std::cout << "2) LAST NAME: "; helpPrint(results, 1);
-					std::cout << "3) ADDRESS: "; helpPrint(results, 2);
-					std::cout << "4) CITY: "; helpPrint(results, 3);
-					std::cout << "5) STATE: "; helpPrint(results, 4);
-					std::cout << "6) ZIP: "; helpPrint(results, 5);
-					std::cout << "7) PHONE: "; helpPrint(results, 6);
-					std::cout << "8) EMAIL: "; helpPrint(results, 7);
-					std::cout << "9) ID: "; helpPrint(results, 8);
-					std::cout << "Correct information? (Type number 1-9 or 0 if CORRECT)" << endl;
+					std::cout << "0) FIRST NAME: "; helpPrint(results, 0);
+					std::cout << "1) LAST NAME: "; helpPrint(results, 1);
+					std::cout << "2) ADDRESS: "; helpPrint(results, 2);
+					std::cout << "3) CITY: "; helpPrint(results, 3);
+					std::cout << "4) STATE: "; helpPrint(results, 4);
+					std::cout << "5) ZIP: "; helpPrint(results, 5);
+					std::cout << "6) PHONE: "; helpPrint(results, 6);
+					std::cout << "7) EMAIL: "; helpPrint(results, 7);
+					std::cout << "8) ID: "; helpPrint(results, 8);
+					std::cout << "Correct information? (Type number 0-8 or ENTER if correct)" << endl;
 
 					std::string input;
 					std::getline(std::cin, input);
-					if (input >= "0" || input <= "9") {
+					if (stoi(input) <= 8) {
 						std::string input2;
 						cout << "Re-enter information..." << endl;
 						std::getline(std::cin, input2);
@@ -104,10 +104,49 @@ void loadData() {
 					else { 
 						correct = true; 
 					}
+					ErrorHandler* handler = new ErrorHandler;
+					Doctor* doctor = new Doctor(results, handler);
+					if (handler->getErrorStatus()) { delete doctor; }
+					else { Doctors::addNewDoctor(doctor); }
+					delete handler;
 				}
 			case(1):
+				while (!correct) {
+					std::cout << "PATIENT" << endl;
+					std::cout << "0) ARRIVAL TIME: "; helpPrint(results, 0);
+					std::cout << "1) FIRST NAME: "; helpPrint(results, 0);
+					std::cout << "2) LAST NAME: "; helpPrint(results, 1);
+					std::cout << "3) ADDRESS: "; helpPrint(results, 2);
+					std::cout << "4) CITY: "; helpPrint(results, 3);
+					std::cout << "5) STATE: "; helpPrint(results, 4);
+					std::cout << "6) ZIP: "; helpPrint(results, 5);
+					std::cout << "7) PHONE: "; helpPrint(results, 6);
+					std::cout << "8) EMAIL: "; helpPrint(results, 7);
+					std::cout << "9) DOB: "; helpPrint(results, 9);
+					std::cout << "10) INSURANCE: "; helpPrint(results, 9);
+					std::cout << "11) ID: "; helpPrint(results, 8);
+					std::cout << "Correct information? (Type number 0-11 or ENTER if correct)" << endl;
+
+					std::string input;
+					std::getline(std::cin, input);
+					if (stoi(input) <= 11) {
+						std::string input2;
+						cout << "Re-enter information..." << endl;
+						std::getline(std::cin, input2);
+						results[stoi(input)] = input2;
+					}
+					else {
+						correct = true;
+					}
+					ErrorHandler* handler = new ErrorHandler;
+					Patient* patient = new Patient(results, handler);
+					if (handler->getErrorStatus()) { delete patient; }
+					else { Patients::addToQueue(patient); }
+					delete handler;
+				}
 			case(2):
 				keepReading = false;
+
 			}
 			}
 		}

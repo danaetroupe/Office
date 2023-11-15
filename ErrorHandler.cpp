@@ -49,7 +49,7 @@ void ErrorHandler::checkFile(string name) {
     if (!file) {
         addErrorCode(ERROR_FILE_INVALID);
     }
-    file.close()
+    file.close();
 }
 
 void ErrorHandler::addErrorCode(FLAGS flag) {

@@ -4,6 +4,3 @@ Doctor::Doctor(string name, string number, string email, Address* address, Error
 
 }
 
-Doctor::Doctor(vector<string> input, ErrorHandler* handler) {
-
-}

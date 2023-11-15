@@ -1,5 +1,4 @@
 #include "Time.h"
-#include <chrono>
 
 Time::Time() {
 
@@ -12,6 +11,15 @@ Time::Time(std::string value) : value(value) {
 	if (value.substr(9, 2) == "pm") {
 		this->hours += 12;
 	}
+}
+
+Time::Time(std::string hour, std::string minutes, std::string seconds) {
+	this->hours = std::stoi(hour);
+	if (this->hours >= 24) { this->hours = 0; }
+	this->minutes = std::stoi(minutes);
+	if (this->minutes >= 60) { this->minutes = 0; }
+	this->seconds = std::stoi(seconds);
+	if (this->seconds >= 60) { this->seconds = 0; }
 }
 
 bool Time::operator>(const Time& t) {

@@ -2,12 +2,14 @@
 
 #include <set>
 #include <map>
-using namespace std;
 
 #include "Doctor.h"
 
 namespace Doctors
 {
+	int generateUniqueId();
+
 	void addNewDoctor(Doctor*);
+	void addNewDoctor(Doctor*, int id);
 };
 

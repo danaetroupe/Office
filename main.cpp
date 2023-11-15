@@ -80,6 +80,7 @@ void loadData() {
 			while (!correct) {
 			switch (currentCategory) {
 			case(0):
+				results.resize(9);
 				while (!correct) {
 					std::cout << "DOCTOR" << endl;
 					std::cout << "0) FIRST NAME: "; helpPrint(results, 0);
@@ -105,26 +106,30 @@ void loadData() {
 						correct = true; 
 					}
 					ErrorHandler* handler = new ErrorHandler;
-					Doctor* doctor = new Doctor(results, handler);
+					string name = results[0] + " " + results[1];
+					string email = results[7];
+					string phone = results[6];
+					Doctor* doctor = new Doctor(name, phone, email, new Address(results[2], results[3], results[4], results[5]), handler);
 					if (handler->getErrorStatus()) { delete doctor; }
-					else { Doctors::addNewDoctor(doctor); }
+					else { Doctors::addNewDoctor(doctor, stoi(results[8])); }
 					delete handler;
 				}
 			case(1):
+				results.resize(12);
 				while (!correct) {
 					std::cout << "PATIENT" << endl;
 					std::cout << "0) ARRIVAL TIME: "; helpPrint(results, 0);
-					std::cout << "1) FIRST NAME: "; helpPrint(results, 0);
-					std::cout << "2) LAST NAME: "; helpPrint(results, 1);
-					std::cout << "3) ADDRESS: "; helpPrint(results, 2);
-					std::cout << "4) CITY: "; helpPrint(results, 3);
-					std::cout << "5) STATE: "; helpPrint(results, 4);
-					std::cout << "6) ZIP: "; helpPrint(results, 5);
-					std::cout << "7) PHONE: "; helpPrint(results, 6);
-					std::cout << "8) EMAIL: "; helpPrint(results, 7);
+					std::cout << "1) FIRST NAME: "; helpPrint(results, 1);
+					std::cout << "2) LAST NAME: "; helpPrint(results, 2);
+					std::cout << "3) ADDRESS: "; helpPrint(results, 3);
+					std::cout << "4) CITY: "; helpPrint(results, 4);
+					std::cout << "5) STATE: "; helpPrint(results, 5);
+					std::cout << "6) ZIP: "; helpPrint(results, 6);
+					std::cout << "7) PHONE: "; helpPrint(results, 7);
+					std::cout << "8) EMAIL: "; helpPrint(results, 8);
 					std::cout << "9) DOB: "; helpPrint(results, 9);
-					std::cout << "10) INSURANCE: "; helpPrint(results, 9);
-					std::cout << "11) ID: "; helpPrint(results, 8);
+					std::cout << "10) INSURANCE: "; helpPrint(results, 10);
+					std::cout << "11) ID: "; helpPrint(results, 11);
 					std::cout << "Correct information? (Type number 0-11 or ENTER if correct)" << endl;
 
 					std::string input;
@@ -139,14 +144,20 @@ void loadData() {
 						correct = true;
 					}
 					ErrorHandler* handler = new ErrorHandler;
-					Patient* patient = new Patient(results, handler);
+					string name = results[1] + " " + results[2];
+					string email = results[8];
+					string phone = results[7];
+					string insurance = results[10];
+					Patient* patient = new Patient(name, phone, email, insurance, new Address(results[3], results[4], results[5], results[6]), new Date(results[9]), new Time(results[0]), handler);
 					if (handler->getErrorStatus()) { delete patient; }
 					else { Patients::addToQueue(patient); }
 					delete handler;
 				}
 			case(2):
 				keepReading = false;
+				for (string result : results) {
 
+				}
 			}
 			}
 		}
@@ -159,7 +170,7 @@ void addNewPatient() {
 	ErrorHandler* handler = new ErrorHandler();
 	Patient* tempPatient = nullptr;
 	while (tempPatient == nullptr) {
-		std::string name, address, city, state, zip, phone, email, insurance, month, day, year;
+		std::string name, address, city, state, zip, phone, email, insurance, month, day, year, hour, minute, second;
 		std::cout << "NAME: " << endl;
 		std::getline(std::cin, name);
 		std::cout << "ADDRESS: " << endl;
@@ -183,8 +194,14 @@ void addNewPatient() {
 		std::getline(std::cin, day);
 		std::cout << "YEAR:" << endl;
 		std::getline(std::cin, year);
+		std::cout << "ARRIVAL TIME (HOUR):" << endl;
+		std::getline(std::cin, hour);
+		std::cout << "ARRIVAL TIME (MINUTE):" << endl;
+		std::getline(std::cin, minute);
+		std::cout << "ARRIVAL TIME (SECOND):" << endl;
+		std::getline(std::cin, second);
 
-		Patient* tempPatient = new Patient(name, phone, email, insurance, new Address(address, city, state, zip), new Date(year, month, day), handler);
+		Patient* tempPatient = new Patient(name, phone, email, insurance, new Address(address, city, state, zip), new Date(year, month, day), new Time(hour, minute, second), handler);
 		if (handler->getErrorStatus()) {
 			std::cout << "ERROR: ";
 			for (std::string error : handler->getErrorDisplays()) {

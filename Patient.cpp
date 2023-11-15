@@ -1,6 +1,7 @@
 #include "Patient.h"
 
-Patient::Patient(string name, string number, string email, string insurance, Address* address, Date* date, ErrorHandler* handler) : Person(name, number, email, address, handler) {
+Patient::Patient(string name, string number, string email, string insurance, Address* address, Date* date, Time* arrivalTime, ErrorHandler* handler) : Person(name, number, email, address, handler) {
+	this->arrivalTime = arrivalTime;
 	this->birthDate = date;
 	this->insurance = insurance;
 }

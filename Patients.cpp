@@ -1,15 +1,16 @@
 #include "Patients.h"
-//using namespace Patients;
+#include <vector>
 
-queue<Patient*> waitingRoom;
+vector<pair<Time*, Patient*>> waitingRoom;
 map<int, Patient*> currentAppointments;
 set<int> patientIds;
 
 void Patients::deallocateMemory()
 {
 	while (waitingRoom.size() > 0) {
-		delete waitingRoom.front();
-		waitingRoom.pop();
+		delete waitingRoom[0].first;
+		delete waitingRoom[0].second;
+		waitingRoom.erase(waitingRoom.begin());
 	}
 	for (auto& p : currentAppointments) {
 		delete p.second;
@@ -18,5 +19,6 @@ void Patients::deallocateMemory()
 }
 
 void Patients::addToQueue(Patient* patient) {
-	waitingRoom.push(patient);
+	waitingRoom.push_back({ patient->getTime(), patient });
+	sort(waitingRoom.begin(), waitingRoom.end());
 }

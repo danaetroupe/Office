@@ -1,4 +1,5 @@
 #include "Rooms.h"
+#include <iostream>
 
 std::set<int> emptyRooms;
 std::set<int> occupiedRooms;
@@ -14,6 +15,7 @@ bool Rooms::occupyRoom(int roomNumber) {
 	else {
 		emptyRooms.erase(roomNumber);
 		occupiedRooms.insert(roomNumber);
+		return true;
 	}
 }
 bool Rooms::emptyRoom(int roomNumber) {
@@ -23,6 +25,7 @@ bool Rooms::emptyRoom(int roomNumber) {
 	else {
 		occupiedRooms.erase(roomNumber);
 		emptyRooms.insert(roomNumber);
+		return true;
 	}
 }
 std::vector<int> Rooms::getEmptyRooms() {
@@ -31,4 +34,11 @@ std::vector<int> Rooms::getEmptyRooms() {
 		rooms.push_back(room);
 	}
 	return rooms;
+}
+
+void Rooms::showRooms() {
+	std::cout << "= ROOMS =" << std::endl;
+	for (int room : emptyRooms) {
+		std::cout << "#" << room << std::endl;
+	}
 }

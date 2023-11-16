@@ -51,6 +51,9 @@
     <ClInclude Include="Rooms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Appointments.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Person.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Rooms.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Appointments.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

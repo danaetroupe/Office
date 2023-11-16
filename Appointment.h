@@ -9,18 +9,15 @@ class Appointment {
 	Patient* patient;
 	Doctor* doctor;
 	int roomNumber;
-	int time;
 	string visitReason;
 
 public:
-	Appointment(Patient* p, Doctor* d) : patient(p), doctor(d) {};
+	Appointment(Patient* p, Doctor* d, int roomNumber, string visitReason) : patient(p), doctor(d), roomNumber(roomNumber), visitReason(visitReason) {};
 
 	int getRoomNumber() { return roomNumber; }
-	int getTime() { return time; }
 	string getVisitReason() { return visitReason; }
 
 	void setRoomNumber(int room) { this->roomNumber = room; }
-	void setTime(int time) { this->time = time; }
 	void setVisitReason(string reason) { this->visitReason = reason; }
 
 };

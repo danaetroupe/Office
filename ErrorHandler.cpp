@@ -20,19 +20,19 @@ void ErrorHandler::clearErrorCodes()
 }
 
 void ErrorHandler::checkName(string name) {
-    if (!regex_match(name, regex("[a-zA-Z]+"))) {
+    if (!regex_match(name, regex("[a-zA-Z ]+"))) {
         addErrorCode(ERROR_NAME_INVALID);
     }
 }
 
 void ErrorHandler::checkEmail(string email) {
-    if (!regex_match(email, regex("[a-zA-Z0-9_]+@[a-zA-Z]+.[a-zA-Z]+"))) {
+    if (!regex_match(email, regex("[a-zA-Z0-9_.]+@[a-zA-Z]+.[a-zA-Z]+"))) {
         addErrorCode(ERROR_EMAIL_INVALID);
     }
 }
 
 void ErrorHandler::checkAddress(string address, string zip) {
-    if (!regex_match(address, regex("[0-9]* [a-zA-Z]*")) || !regex_match(zip, regex("[0-9]+"))) {
+    if (!regex_match(address, regex("[0-9]* [a-zA-Z ]*")) || !regex_match(zip, regex("[0-9]+"))) {
         addErrorCode(ERROR_ADDRESS_INVALID);
     }
 }

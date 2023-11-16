@@ -2,6 +2,7 @@
 #include "Patients.h"
 #include "Doctors.h"
 #include "FileHandler.h"
+#include "Rooms.h"
 #include <iostream>
 #include <map>
 
@@ -11,6 +12,38 @@ void helpPrint(vector<string>, int);
 void loadData();
 void addNewPatient();
 void addNewDoctor();
+void showPatientSummary();
+void showDoctorSummary();
+
+int main() {
+	bool mainLoop = true;
+	while (mainLoop) {
+		menuOptions choice = showMenu();
+		switch (choice) {
+		case(addPatient):
+			addNewPatient();
+			break;
+		case(addDoctor):
+			addNewDoctor();
+			break;
+		case(load):
+			loadData();
+			break;
+		case(patientSummary):
+			showPatientSummary();
+			break;
+		case(doctorSummary):
+			showDoctorSummary();
+			break;
+		case(close):
+			mainLoop = false;
+		default:
+			break;
+		}
+	}
+	Patients::deallocateMemory();
+	return 1;
+}
 
 menuOptions showMenu() {
 	std::cout << "==== MENU ====" << endl;
@@ -58,12 +91,13 @@ void loadData() {
 	FileHandler file(f, handler);
 	if (handler->getErrorStatus()) {
 		for (std::string display : handler->getErrorDisplays()) { std::cout << display << endl; }
+		delete handler;
 	}
 	else {
 		int keepReading = true;
 		int currentCategory = 0;
 		while (keepReading) {
-			vector<string> results = file.readFromFile(" ");
+			vector<string> results = file.readFromFile("");
 			if (results[0] == "Doctors") {
 				results.erase(results.begin());
 			}
@@ -77,8 +111,8 @@ void loadData() {
 			}
 
 			int correct = false;
-			while (!correct) {
 			switch (currentCategory) {
+			// ADD DOCTOR
 			case(0):
 				results.resize(9);
 				while (!correct) {
@@ -92,11 +126,11 @@ void loadData() {
 					std::cout << "6) PHONE: "; helpPrint(results, 6);
 					std::cout << "7) EMAIL: "; helpPrint(results, 7);
 					std::cout << "8) ID: "; helpPrint(results, 8);
-					std::cout << "Correct information? (Type number 0-8 or ENTER if correct)" << endl;
+					std::cout << "Correct information? (Type number 0-8 or DONE if correct)" << endl;
 
 					std::string input;
 					std::getline(std::cin, input);
-					if (stoi(input) <= 8) {
+					if (input[0] <= '8' && input[0] >= '0') {
 						std::string input2;
 						cout << "Re-enter information..." << endl;
 						std::getline(std::cin, input2);
@@ -110,10 +144,23 @@ void loadData() {
 					string email = results[7];
 					string phone = results[6];
 					Doctor* doctor = new Doctor(name, phone, email, new Address(results[2], results[3], results[4], results[5]), handler);
-					if (handler->getErrorStatus()) { delete doctor; }
-					else { Doctors::addNewDoctor(doctor, stoi(results[8])); }
+					if (handler->getErrorStatus()) { 
+						delete doctor; 
+						cout << "DOCTOR UNSUCESSFULLY ADDED";
+						for (string error : handler->getErrorDisplays()) {
+							cout << error;
+						}
+						cout << endl;
+					}
+					else { 
+						if (results[8] == "") { results[8] = "0"; }
+						Doctors::addNewDoctor(doctor, stoi(results[8]));
+						cout << "DOCTOR SUCCESSFULLY ADDED" << endl;
+					}
 					delete handler;
 				}
+				break;
+			// ADD PATIENT
 			case(1):
 				results.resize(12);
 				while (!correct) {
@@ -130,11 +177,11 @@ void loadData() {
 					std::cout << "9) DOB: "; helpPrint(results, 9);
 					std::cout << "10) INSURANCE: "; helpPrint(results, 10);
 					std::cout << "11) ID: "; helpPrint(results, 11);
-					std::cout << "Correct information? (Type number 0-11 or ENTER if correct)" << endl;
+					std::cout << "Correct information? (Type number 0-11 or DONE if correct)" << endl;
 
 					std::string input;
 					std::getline(std::cin, input);
-					if (stoi(input) <= 11) {
+					if (input[0] <= '9' && input[0] >= '0') {
 						std::string input2;
 						cout << "Re-enter information..." << endl;
 						std::getline(std::cin, input2);
@@ -149,20 +196,37 @@ void loadData() {
 					string phone = results[7];
 					string insurance = results[10];
 					Patient* patient = new Patient(name, phone, email, insurance, new Address(results[3], results[4], results[5], results[6]), new Date(results[9]), new Time(results[0]), handler);
-					if (handler->getErrorStatus()) { delete patient; }
-					else { Patients::addToQueue(patient); }
+					if (handler->getErrorStatus()) { 
+						delete patient; 
+						cout << "PATIENT UNSUCESSFULLY ADDED";
+						for (string error : handler->getErrorDisplays()) {
+							cout << error;
+						}
+						cout << endl;
+					}
+					else { 
+						Patients::addToQueue(patient); 
+						cout << "PATIENT SUCCESFULLY ADDED" << endl;
+					}
 					delete handler;
 				}
+				break;
+			// ADD ROOMS
 			case(2):
 				keepReading = false;
+				cout << "ROOMS" << endl;
 				for (string result : results) {
-
+					cout << "ROOM#: " << result << endl;
+					Rooms::addNewRoom(stoi(result));
 				}
-			}
+				cout << "ROOMS SUCCESSFULLY ADDED" << endl;
+				break;
+			default:
+				cout << "Not recognized" << endl;
+				break;
 			}
 		}
 	}
-	delete handler;
 }
 
 void addNewPatient() {
@@ -264,21 +328,25 @@ void addNewDoctor() {
 	}
 }
 
-int main() {
-	menuOptions choice = showMenu();
-	switch (choice) {
-	case(addPatient):
-		addNewPatient();
-		break;
-	case(addDoctor):
-		addNewDoctor();
-		break;
-	default:
-		break;
+void showPatientSummary() {
+	Patients::showPatientInfo();
+	cout << "\nDo you want to assign a patient? (Y/N)" << endl;
+	string input;
+	cin >> input;
+	if (input == "Y") {
+		Rooms::showRooms();
 	}
-	Patients::deallocateMemory();
-	return 1;
+	cout << "\nEnter a room number:" << endl;
+	getline(cin, input);
+	if (Rooms::occupyRoom(stoi(input))) {
+
+	}
 }
+
+void showDoctorSummary() {
+}
+
+
 
 /*
 ErrorHandler* handler = new ErrorHandler;

@@ -22,3 +22,9 @@ void Patients::addToQueue(Patient* patient) {
 	waitingRoom.push_back({ patient->getTime(), patient });
 	sort(waitingRoom.begin(), waitingRoom.end());
 }
+
+void Patients::showPatientInfo() {
+	for (auto& p : waitingRoom) {
+		p.second->printInfo();
+	}
+}

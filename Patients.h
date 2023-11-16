@@ -19,6 +19,7 @@ namespace Patients
 	
 	void addToQueue(Patient*);
 	void removePatientFromQueue();
+	void showPatientInfo();
 
 	void deallocateMemory();
 };

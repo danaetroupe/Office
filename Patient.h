@@ -33,5 +33,6 @@ public:
 		birthDate = new Date(year, month, day);
 	}
 	void setInsurance(string insurance) { this->insurance = insurance; }
+	void printInfo();
 };
 

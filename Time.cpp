@@ -1,8 +1,5 @@
 #include "Time.h"
-
-Time::Time() {
-
-}
+#include <iostream>
 
 Time::Time(std::string value) : value(value) {
 	this->hours = std::stoi(value.substr(0, 2));
@@ -37,4 +34,8 @@ bool Time::operator>(const Time& t) {
 	else {
 		return false;
 	}
+}
+
+void Time::showTime() {
+	std::cout << this->hours << ":" << this->minutes << ":" << this->seconds;
 }

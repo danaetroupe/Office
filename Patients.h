@@ -3,7 +3,6 @@
 #include <queue>
 #include <map>
 #include <set>
-using namespace std;
 
 #include "Patient.h"
 

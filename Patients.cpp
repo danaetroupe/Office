@@ -20,11 +20,17 @@ void Patients::deallocateMemory()
 
 void Patients::addToQueue(Patient* patient) {
 	waitingRoom.push_back({ patient->getTime(), patient });
-	sort(waitingRoom.begin(), waitingRoom.end());
+	sort(currentAppointments.begin(), currentAppointments.end());
 }
 
 void Patients::showPatientInfo() {
 	for (auto& p : waitingRoom) {
 		p.second->printInfo();
 	}
+}
+
+Patient* Patients::getFirstPatient() {
+	Patient* p = waitingRoom[0].second;
+	p
+
 }

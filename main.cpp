@@ -3,6 +3,8 @@
 #include "Doctors.h"
 #include "FileHandler.h"
 #include "Rooms.h"
+#include "Appointments.h"
+
 #include <iostream>
 #include <map>
 
@@ -338,8 +340,15 @@ void showPatientSummary() {
 	}
 	cout << "\nEnter a room number:" << endl;
 	getline(cin, input);
-	if (Rooms::occupyRoom(stoi(input))) {
-
+	int num = stoi(input);
+	if (Rooms::occupyRoom(num)) {
+		string reason;
+		cout << "What is the visit reason?" << endl;
+		getline(cin, reason);
+		string type;
+		cout << "Sick Visit? (Y/N)" << endl;
+		getline(cin, type);
+		Appointments::addAppointment(new Appointment(Patients::getFirstPatient(), num, reason, (type == "Y") ? Appointment::sick : Appointment::preventative));
 	}
 }
 

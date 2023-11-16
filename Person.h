@@ -20,7 +20,7 @@ class Person
 protected:
 	Address* address;
 	string name, email, phoneNumber;
-	int id = 0;
+	int id = NULL;
 
 	Account* account;
 public:
@@ -42,5 +42,6 @@ public:
 	}
 	void setPhoneNumber(string number) { this->phoneNumber = number; }
 	void setEmail(string email) { this->email = email; }
+	void assignId(int id);
 };
 

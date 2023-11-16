@@ -3,7 +3,6 @@
 
 class Time {
 	int hours, minutes, seconds;
-	std::string value = NULL;
 public:
 	Time(std::string timeValue);
 	Time(std::string, std::string, std::string);

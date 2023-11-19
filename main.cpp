@@ -16,6 +16,8 @@ void addNewPatient();
 void addNewDoctor();
 void showPatientSummary();
 void showDoctorSummary();
+void checkoutPatient();
+void closeOffice();
 
 int main() {
 	bool mainLoop = true;
@@ -37,8 +39,11 @@ int main() {
 		case(doctorSummary):
 			showDoctorSummary();
 			break;
+		case(checkout):
+			checkoutPatient();
 		case(close):
 			mainLoop = false;
+			//closeOffice();
 		default:
 			break;
 		}
@@ -48,7 +53,7 @@ int main() {
 }
 
 menuOptions showMenu() {
-	std::cout << "==== MENU ====" << endl;
+	std::cout << "\n==== MENU ====" << endl;
 	vector<std::string> options = { "Load office data", "Add new patient", "Add new doctor", "Patient queue summary", "Doctor summary", "Checkout patient", "Close office" };
 	std::string option = "";
 	while (option == "") {
@@ -85,7 +90,7 @@ void helpPrint(vector<string> v, int i) {
 }
 
 void loadData() {
-	std::cout << "== LOAD DATA ==" << endl;
+	std::cout << "\n== LOAD DATA ==" << endl;
 	std::cout << "FILE NAME:" << endl;
 	std::string f;
 	std::getline(std::cin, f);
@@ -232,7 +237,7 @@ void loadData() {
 }
 
 void addNewPatient() {
-	std::cout << "== ADD NEW PATIENT ==" << endl;
+	std::cout << "\n== ADD NEW PATIENT ==" << endl;
 	ErrorHandler* handler = new ErrorHandler();
 	Patient* tempPatient = nullptr;
 	while (tempPatient == nullptr) {
@@ -283,13 +288,14 @@ void addNewPatient() {
 		else {
 			Patients::addToQueue(tempPatient);
 			std::cout << "Patient added successufully." << endl;
+			break;
 		}
 	}
 	delete handler;
 }
 
 void addNewDoctor() {
-	std::cout << "== ADD NEW DOCTOR ==" << endl;
+	std::cout << "\n== ADD NEW DOCTOR ==" << endl;
 	ErrorHandler* handler = new ErrorHandler();
 	Doctor* tempDoctor = nullptr;
 	while (tempDoctor == nullptr) {
@@ -331,45 +337,85 @@ void addNewDoctor() {
 }
 
 void showPatientSummary() {
-	Patients::showPatientInfo();
-	cout << "\nDo you want to assign a patient? (Y/N)" << endl;
-	string input;
-	cin >> input;
-	if (input == "Y") {
-		Rooms::showRooms();
+	bool quit = false;
+	while(!quit) {
+		std::cout << "\n== PATIENT SUMMARY ==" << std::endl;
+		if (Patients::isPatients()) {
+			Patients::showPatientInfo();
+		}
+		else {
+			std::cout << "NO AVALIABLE PATIENTS" << endl;
+			quit = true;
+			break;
+		}
+		cout << "\nDo you want to assign a patient? (Y/N)" << endl;
+		string input;
+		getline(cin, input);
+		if (input == "Y") {
+			if (Rooms::isEmptyRooms()) {
+				Rooms::showRooms();
+				cout << "\nEnter a room number:" << endl;
+				getline(cin, input);
+				int num = stoi(input);
+				if (Rooms::occupyRoom(num)) {
+					string reason;
+					cout << "What is the visit reason?" << endl;
+					getline(cin, reason);
+					string type;
+					cout << "Sick Visit? (Y/N)" << endl;
+					getline(cin, type);
+					Appointments::addAppointment(new Appointment(Patients::getFirstPatient(), num, reason, (type == "Y") ? Appointment::sick : Appointment::preventative));
+				}
+				else {
+					cout << "ROOM NUMBER NOT VALID." << endl;
+					quit = true;
+				}
+			}
+			else {
+				std::cout << "NO AVALIABLE ROOMS" << endl;
+				quit = true;
+				break;
+			}
+		}
+		else {
+			quit = true;
+		}
+		
 	}
-	cout << "\nEnter a room number:" << endl;
-	getline(cin, input);
-	int num = stoi(input);
-	if (Rooms::occupyRoom(num)) {
-		string reason;
-		cout << "What is the visit reason?" << endl;
-		getline(cin, reason);
-		string type;
-		cout << "Sick Visit? (Y/N)" << endl;
-		getline(cin, type);
-		Appointments::addAppointment(new Appointment(Patients::getFirstPatient(), num, reason, (type == "Y") ? Appointment::sick : Appointment::preventative));
-	}
+	
 }
 
 void showDoctorSummary() {
+	cout << "\n== DOCTOR SUMMARY ==" << endl;
+	int apts = Appointments::getNumberOfAppointments();
+	//cout << "OPEN APPOINTMENTS: " << apts << endl;
+	Doctors::showInfo();
+	Appointments::showAppointments();
+	while (apts > 0 && Doctors::getNumberOfDoctors() > 0) {
+		cout << "Assign avaliable doctor to appointment? (Y/N)" << endl;
+		string input;
+		getline(cin, input);
+		if (input == "Y") {
+			cout << "Enter doc ID to assign" << endl;
+			string docId;
+			getline(cin, docId);
+			if (Doctors::isDoctorAvaliable(stoi(docId))) {
+				Doctor* d = Doctors::getAvaliableDoctorById(stoi(docId));
+				Appointments::assignDoctor(d);
+				cout << "Dr. " << d->getName() << " has been assigned." << endl;
+			}
+			else {
+				cout << "DOCTOR IS NOT AVALIABLE/DOESN'T EXIST." << endl;
+				break;
+			}
+		}
+	}
 }
 
+void checkoutPatient() {
 
+}
 
-/*
-ErrorHandler* handler = new ErrorHandler;
-	Address* address = new Address("address", "city", "state", "zip");
-	Date* date = new Date(5, 27, 2003);
-	Patient* tempPatient = new Patient("name", "phone", "danaetroupe.gmail.com", "insurance", address, date, handler);
-	if (handler->getErrorStatus()) {
-		std::cout << "Error found";
-		std::string wait;
-		std::cin >> wait;
-	}
-	else {
-		std::cout << "No error found.";
-		std::string wait;
-		std::cin >> wait;
-	}
-*/
+void closeOffice() {
+
+}

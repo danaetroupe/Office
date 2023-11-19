@@ -42,3 +42,12 @@ void Rooms::showRooms() {
 		std::cout << "#" << room << std::endl;
 	}
 }
+
+bool Rooms::isEmptyRooms() {
+	if (emptyRooms.size() > 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}

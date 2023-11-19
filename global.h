@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-using namespace std;
+#include "Time.h"
 
 extern enum menuOptions { load, addPatient, addDoctor, patientSummary, doctorSummary, checkout, close };
-extern string const OFFICE_HISTORY = "OfficeHistory.txt";
+extern std::string const OFFICE_HISTORY = "OfficeHistory.txt";
 

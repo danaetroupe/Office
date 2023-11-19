@@ -34,6 +34,7 @@ public:
 	string getZipCode() { return address->zipCode; }
 	string getPhoneNumber() { return phoneNumber; }
 	string getEmail() { return email; }
+	int getId() { return id; }
 
 	void setName(string name) { this->name = name; }
 	void setAddress(string address, string city, string state, string zip) {
@@ -42,6 +43,6 @@ public:
 	}
 	void setPhoneNumber(string number) { this->phoneNumber = number; }
 	void setEmail(string email) { this->email = email; }
-	void assignId(int id);
+	void assignId(int id) { this->id = id; }
 };
 

@@ -18,9 +18,14 @@ void Patients::deallocateMemory()
 	}
 }
 
+bool compareTime(pair<Time*, Patient*> p1, pair<Time*, Patient*> p2) {
+	return *p1.first < *p2.first;
+}
+
 void Patients::addToQueue(Patient* patient) {
 	waitingRoom.push_back({ patient->getTime(), patient });
-	sort(currentAppointments.begin(), currentAppointments.end());
+	sort(waitingRoom.begin(), waitingRoom.end(), compareTime);
+	//showPatientInfo();
 }
 
 void Patients::showPatientInfo() {
@@ -31,6 +36,15 @@ void Patients::showPatientInfo() {
 
 Patient* Patients::getFirstPatient() {
 	Patient* p = waitingRoom[0].second;
-	p
+	waitingRoom.erase(waitingRoom.begin());
+	return p;
+}
 
+bool Patients::isPatients() {
+	if (waitingRoom.size() > 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }

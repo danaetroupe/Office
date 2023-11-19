@@ -8,5 +8,6 @@ public:
 	Time(std::string, std::string, std::string);
 
 	bool operator>(const Time&);
+	bool operator<(const Time&);
 	void showTime();
 };

@@ -8,5 +8,6 @@ namespace Rooms
 	bool emptyRoom(int);
 	std::vector<int> getEmptyRooms();
 	void showRooms();
+	bool isEmptyRooms();
 };
 

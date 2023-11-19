@@ -7,9 +7,12 @@
 
 namespace Doctors
 {
-	int generateUniqueId();
-
 	void addNewDoctor(Doctor*);
 	void addNewDoctor(Doctor*, int id);
+	void showInfo();
+
+	int getNumberOfDoctors();
+	bool isDoctorAvaliable(int id);
+	Doctor* getAvaliableDoctorById(int id);
 };
 

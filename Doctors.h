@@ -14,5 +14,6 @@ namespace Doctors
 	int getNumberOfDoctors();
 	bool isDoctorAvaliable(int id);
 	Doctor* getAvaliableDoctorById(int id);
+	void deallocateMemory();
 };
 

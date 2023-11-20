@@ -6,6 +6,12 @@ namespace Appointments
 	int getNumberOfAppointments();
 	void assignDoctor(Doctor*);
 	void showAppointments();
+
+	bool isAssigned(int);
+	Appointment* getAppointmentFromRoom(int);
+	void clearAppointment(Appointment*);
+
+	void clearMemory();
 };
 
 

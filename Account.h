@@ -5,12 +5,13 @@ public:
 	Account() {
 		this->balance = 500;
 	}
-	Account(float balance) {
+	Account(double balance) {
 		this->balance = balance;
 	}
 
-	float getBalance() { return balance; }
+	double getBalance() { return balance; }
+	void makeTransaction(double value) { balance += value; }
 private:
-	float balance;
+	double balance;
 };
 

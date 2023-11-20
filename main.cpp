@@ -21,6 +21,7 @@ void closeOffice();
 
 int main() {
 	bool mainLoop = true;
+	cout << "WELCOME TO OFFICE MANAGER PROGRAM!" << endl;
 	while (mainLoop) {
 		menuOptions choice = showMenu();
 		switch (choice) {
@@ -43,12 +44,13 @@ int main() {
 			checkoutPatient();
 		case(close):
 			mainLoop = false;
-			//closeOffice();
+			closeOffice();
 		default:
 			break;
 		}
 	}
 	Patients::deallocateMemory();
+	Appointments::clearMemory();
 	return 1;
 }
 
@@ -417,7 +419,31 @@ void showDoctorSummary() {
 
 void checkoutPatient() {
 	Appointments::showAppointments();
-
+	cout << "Enter room number to checkout: " << endl;
+	string input;
+	getline(cin, input);
+	if (Appointments::isAssigned(stoi(input))) {
+		Appointment* apt = Appointments::getAppointmentFromRoom(stoi(input));
+		Appointment::visitType type = apt->getVisitType();
+		bool hasInsurance = apt->getPatient()->hasInsurance();
+		double fee;
+		switch (type) {
+		case(Appointment::preventative):
+			if (hasInsurance) { fee = 0; }
+			else { fee = 29.95; }
+			break;
+		case(Appointment::sick): 
+			if (hasInsurance) { fee = 50.95; }
+			else { fee = 150.95; }
+			break;
+		}
+		apt->getPatient()->getAccount()->makeTransaction((fee*-1));
+		apt->getDoctor()->getAccount()->makeTransaction(fee);
+		Appointments::clearAppointment(apt);
+	}
+	else {
+		cout << "ROOM NUMBER IS NOT ASSOCIATED WITH AN APPOINTMENT/DOCTOR IS NOT CURRENTLY SEEING PATIENT." << endl;
+	}
 }
 
 void closeOffice() {

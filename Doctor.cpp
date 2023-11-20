@@ -6,6 +6,6 @@ Doctor::Doctor(string name, string number, string email, Address* address, Error
 }
 
 void Doctor::showInfo() {
-	std::cout << this->id << "|  " << this->name << endl;
+	std::cout << this->id << " | " << this->name << endl;
 }
 

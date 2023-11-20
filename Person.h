@@ -34,6 +34,7 @@ public:
 	string getPhoneNumber() { return phoneNumber; }
 	string getEmail() { return email; }
 	int getId() { return id; }
+	Account* getAccount() { return account; }
 
 	void setName(string name) { this->name = name; }
 	void setAddress(string address, string city, string state, string zip) {

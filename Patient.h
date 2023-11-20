@@ -1,6 +1,7 @@
 #pragma once
 #include "Person.h"
 #include "Time.h"
+
 struct Date {
 	string year, month, day;
 	Date(string year, string month, string day) {

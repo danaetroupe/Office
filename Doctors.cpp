@@ -61,3 +61,12 @@ Doctor* Doctors::getAvaliableDoctorById(int id) {
 	else { d = nullptr; }
 	return d;
 }
+
+void Doctors::deallocateMemory() {
+	for (auto& p : avaliableDoctors) {
+		delete p.second;
+	}
+	for (auto& p : unavaliableDoctors) {
+		delete p.second;
+	}
+}

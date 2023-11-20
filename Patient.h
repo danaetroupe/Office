@@ -34,5 +34,7 @@ public:
 	}
 	void setInsurance(string insurance) { this->insurance = insurance; }
 	void printInfo();
+
+	bool hasInsurance() { if (this->insurance.size() > 0) { return true; } else { return false; } }
 };
 

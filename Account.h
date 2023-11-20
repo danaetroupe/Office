@@ -2,18 +2,15 @@
 class Account
 {
 public:
-	Account(int id) {
-		this->id = id;
-		this->balance = 0;
+	Account() {
+		this->balance = 500;
 	}
-	Account(int id, float balance) {
-		this->id = id;
+	Account(float balance) {
 		this->balance = balance;
 	}
 
 	float getBalance() { return balance; }
 private:
-	int id;
 	float balance;
 };
 

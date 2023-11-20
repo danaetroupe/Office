@@ -283,6 +283,7 @@ void addNewPatient() {
 			tempPatient = nullptr;
 			std::string retry;
 			std::getline(std::cin, retry);
+			handler->clearErrorCodes();
 			if (retry == "N") { break; }
 		}
 		else {
@@ -315,7 +316,7 @@ void addNewDoctor() {
 		std::cout << "EMAIL ADDRESS: " << endl;
 		std::getline(std::cin, email);
 
-		Doctor* tempPatient = new Doctor(name, phone, email, new Address(address, city, state, zip), handler);
+		tempDoctor = new Doctor(name, phone, email, new Address(address, city, state, zip), handler);
 		if (handler->getErrorStatus()) {
 			std::cout << "ERROR: ";
 			for (std::string error : handler->getErrorDisplays()) {
@@ -327,11 +328,13 @@ void addNewDoctor() {
 			tempDoctor = nullptr;
 			std::string retry;
 			std::getline(std::cin, retry);
+			handler->clearErrorCodes();
 			if (retry == "N") { break; }
 		}
 		else {
 			Doctors::addNewDoctor(tempDoctor);
 			std::cout << "Doctor added successufully." << endl;
+			break;
 		}
 	}
 }
@@ -413,6 +416,7 @@ void showDoctorSummary() {
 }
 
 void checkoutPatient() {
+	Appointments::showAppointments();
 
 }
 

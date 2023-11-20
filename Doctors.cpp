@@ -13,7 +13,8 @@ void Doctors::addNewDoctor(Doctor* doctor) {
 		id = rand() % 50000;
 	} while (doctorIds.count(id) > 0);
 	doctorIds.insert(id);
-	avaliableDoctors[doctor->getId()] = doctor;
+	doctor->assignId(id);
+	avaliableDoctors[id] = doctor;
 }
 
 void Doctors::addNewDoctor(Doctor* doctor, int id) {
@@ -22,26 +23,26 @@ void Doctors::addNewDoctor(Doctor* doctor, int id) {
 	} 
 	doctor->assignId(id);
 	doctorIds.insert(id);
-	avaliableDoctors[doctor->getId()] = doctor;
+	avaliableDoctors[id] = doctor;
 }
 
 void Doctors::showInfo() {
 	if (avaliableDoctors.size() > 0) {
-		std::cout << "=OPEN DOCTORS=" << endl;
+		std::cout << "\n=OPEN DOCTORS=" << endl;
 		for (auto& p : avaliableDoctors) {
 			p.second->showInfo();
 		}
 	}
 	else {
-		cout << "NO AVALIABLE DOCTORS." << endl;
+		cout << "\nNO AVALIABLE DOCTORS." << endl;
 	}
 	if (unavaliableDoctors.size() > 0) {
-		std::cout << "=BUSY DOCTORS=" << endl;
+		std::cout << "\n=BUSY DOCTORS=" << endl;
 		for (auto& p : unavaliableDoctors) {
 			p.second->showInfo();
 		}
 	}
-	else { cout << "NO DOCTORS CURRENTLY SEEING PATIENTS." << endl; }
+	else { cout << "\nNO DOCTORS CURRENTLY SEEING PATIENTS." << endl; }
 	
 }
 

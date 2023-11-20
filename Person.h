@@ -1,13 +1,12 @@
 #pragma once
 #include <string>
-using namespace std;
 
 #include "Account.h"
 #include "ErrorHandler.h"
 
 struct Address {
 	string address, city, state, zipCode;
-	Address(string address, string city, string state, string zip) {
+	Address(std::string address, std::string city, std::string state, std::string zip) {
 		this->address = address;
 		this->city = city;
 		this->state = state;
@@ -20,9 +19,9 @@ class Person
 protected:
 	Address* address;
 	string name, email, phoneNumber;
-	int id = NULL;
+	int id;
 
-	Account* account;
+	Account* account = new Account();
 public:
 	Person(string, string, string, Address*, ErrorHandler*);
 	~Person();

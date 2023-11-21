@@ -5,8 +5,7 @@
 #include "Rooms.h"
 #include "Appointments.h"
 
-#include <iostream>
-#include <map>
+#include<windows.h>  
 
 
 menuOptions showMenu();
@@ -42,9 +41,11 @@ int main() {
 			break;
 		case(checkout):
 			checkoutPatient();
+			break;
 		case(close):
 			mainLoop = false;
 			closeOffice();
+			break;
 		default:
 			break;
 		}
@@ -59,9 +60,11 @@ menuOptions showMenu() {
 	vector<std::string> options = { "Load office data", "Add new patient", "Add new doctor", "Patient queue summary", "Doctor summary", "Checkout patient", "Close office" };
 	std::string option = "";
 	while (option == "") {
+		printSeperator();
 		for (int i = 0; i < options.size(); i++) {
 			std::cout << i << ". " << options[i] << endl;
 		}
+		printSeperator();
 		std::getline(std::cin, option);
 		switch (stoi(option)) {
 		case(0): 
@@ -125,7 +128,9 @@ void loadData() {
 			case(0):
 				results.resize(9);
 				while (!correct) {
+					printSeperator();
 					std::cout << "DOCTOR" << endl;
+					printSeperator();
 					std::cout << "0) FIRST NAME: "; helpPrint(results, 0);
 					std::cout << "1) LAST NAME: "; helpPrint(results, 1);
 					std::cout << "2) ADDRESS: "; helpPrint(results, 2);
@@ -135,6 +140,7 @@ void loadData() {
 					std::cout << "6) PHONE: "; helpPrint(results, 6);
 					std::cout << "7) EMAIL: "; helpPrint(results, 7);
 					std::cout << "8) ID: "; helpPrint(results, 8);
+					printSeperator();
 					std::cout << "Correct information? (Type number 0-8 or DONE if correct)" << endl;
 
 					std::string input;
@@ -153,6 +159,7 @@ void loadData() {
 					string email = results[7];
 					string phone = results[6];
 					Doctor* doctor = new Doctor(name, phone, email, new Address(results[2], results[3], results[4], results[5]), handler);
+					printSeperator();
 					if (handler->getErrorStatus()) { 
 						delete doctor; 
 						cout << "DOCTOR UNSUCESSFULLY ADDED";
@@ -173,7 +180,9 @@ void loadData() {
 			case(1):
 				results.resize(12);
 				while (!correct) {
+					printSeperator();
 					std::cout << "PATIENT" << endl;
+					printSeperator();
 					std::cout << "0) ARRIVAL TIME: "; helpPrint(results, 0);
 					std::cout << "1) FIRST NAME: "; helpPrint(results, 1);
 					std::cout << "2) LAST NAME: "; helpPrint(results, 2);
@@ -186,6 +195,7 @@ void loadData() {
 					std::cout << "9) DOB: "; helpPrint(results, 9);
 					std::cout << "10) INSURANCE: "; helpPrint(results, 10);
 					std::cout << "11) ID: "; helpPrint(results, 11);
+					printSeperator();
 					std::cout << "Correct information? (Type number 0-11 or DONE if correct)" << endl;
 
 					std::string input;
@@ -205,16 +215,17 @@ void loadData() {
 					string phone = results[7];
 					string insurance = results[10];
 					Patient* patient = new Patient(name, phone, email, insurance, new Address(results[3], results[4], results[5], results[6]), new Date(results[9]), new Time(results[0]), handler);
+					printSeperator();
 					if (handler->getErrorStatus()) { 
 						delete patient; 
 						cout << "PATIENT UNSUCESSFULLY ADDED";
 						for (string error : handler->getErrorDisplays()) {
-							cout << error;
+							cout << error << ";";
 						}
 						cout << endl;
 					}
-					else { 
-						Patients::addToQueue(patient); 
+					else {
+						Patients::addToQueue(patient);
 						cout << "PATIENT SUCCESFULLY ADDED" << endl;
 					}
 					delete handler;
@@ -223,11 +234,14 @@ void loadData() {
 			// ADD ROOMS
 			case(2):
 				keepReading = false;
+				printSeperator();
 				cout << "ROOMS" << endl;
+				printSeperator();
 				for (string result : results) {
 					cout << "ROOM#: " << result << endl;
 					Rooms::addNewRoom(stoi(result));
 				}
+				printSeperator();
 				cout << "ROOMS SUCCESSFULLY ADDED" << endl;
 				break;
 			default:
@@ -258,10 +272,9 @@ void addNewPatient() {
 		std::getline(std::cin, phone);
 		std::cout << "EMAIL ADDRESS: " << endl;
 		std::getline(std::cin, email);
-		std::cout << "INSURANCE: " << endl;
+		std::cout << "INSURANCE(OR NA IF NONE): " << endl;
 		std::getline(std::cin, insurance);
-		std::cout << "DATE OF BIRTH:" << endl;
-		std::cout << "MONTH:" << endl;
+		std::cout << "DATE OF BIRTH(MONTH):" << endl;
 		std::getline(std::cin, month);
 		std::cout << "DAY:" << endl;
 		std::getline(std::cin, day);
@@ -344,6 +357,7 @@ void addNewDoctor() {
 void showPatientSummary() {
 	bool quit = false;
 	while(!quit) {
+		printSeperator();
 		std::cout << "\n== PATIENT SUMMARY ==" << std::endl;
 		if (Patients::isPatients()) {
 			Patients::showPatientInfo();
@@ -353,22 +367,30 @@ void showPatientSummary() {
 			quit = true;
 			break;
 		}
+		printSeperator();
 		cout << "\nDo you want to assign a patient? (Y/N)" << endl;
 		string input;
 		getline(cin, input);
 		if (input == "Y") {
 			if (Rooms::isEmptyRooms()) {
+				printSeperator();
 				Rooms::showRooms();
+				printSeperator();
 				cout << "\nEnter a room number:" << endl;
 				getline(cin, input);
 				int num = stoi(input);
 				if (Rooms::occupyRoom(num)) {
-					string reason;
-					cout << "What is the visit reason?" << endl;
-					getline(cin, reason);
 					string type;
 					cout << "Sick Visit? (Y/N)" << endl;
 					getline(cin, type);
+					string reason;
+					if (type == "Y") {
+						cout << "What is the visit reason?" << endl;
+						getline(cin, reason);
+					}
+					else {
+						reason = "Well Visit";
+					}
 					Appointments::addAppointment(new Appointment(Patients::getFirstPatient(), num, reason, (type == "Y") ? Appointment::sick : Appointment::preventative));
 				}
 				else {
@@ -394,8 +416,11 @@ void showDoctorSummary() {
 	cout << "\n== DOCTOR SUMMARY ==" << endl;
 	int apts = Appointments::getNumberOfAppointments();
 	//cout << "OPEN APPOINTMENTS: " << apts << endl;
+	printSeperator();
 	Doctors::showInfo();
+	printSeperator();
 	Appointments::showAppointments();
+	printSeperator();
 	while (apts > 0 && Doctors::getNumberOfDoctors() > 0) {
 		cout << "Assign avaliable doctor to appointment? (Y/N)" << endl;
 		string input;
@@ -406,19 +431,34 @@ void showDoctorSummary() {
 			getline(cin, docId);
 			if (Doctors::isDoctorAvaliable(stoi(docId))) {
 				Doctor* d = Doctors::getAvaliableDoctorById(stoi(docId));
-				Appointments::assignDoctor(d);
-				cout << "Dr. " << d->getName() << " has been assigned." << endl;
+				string roomNumber;
+				cout << "Enter room number of appointment." << endl;
+				getline(cin, roomNumber);
+				if (Appointments::isUnassigned(stoi(roomNumber))) {
+					Appointments::assignDoctor(d, stoi(roomNumber));
+					Appointments::showAppointments();
+					cout << "Dr. " << d->getName() << " has been assigned to " << Appointments::getAppointmentFromRoom(stoi(roomNumber))->getPatient()->getName() << endl;
+				}
+				else {
+					cout << "THERE IS NO UNASSIGNED APPOINTMENT IN ROOM# " << roomNumber << endl;
+				}
 			}
 			else {
 				cout << "DOCTOR IS NOT AVALIABLE/DOESN'T EXIST." << endl;
 				break;
 			}
 		}
+		else {
+			break;
+		}
 	}
 }
 
 void checkoutPatient() {
+	cout << "=== CHECKOUT PATIENTS ===" << endl;
+	printSeperator();
 	Appointments::showAppointments();
+	printSeperator();
 	cout << "Enter room number to checkout: " << endl;
 	string input;
 	getline(cin, input);
@@ -426,7 +466,7 @@ void checkoutPatient() {
 		Appointment* apt = Appointments::getAppointmentFromRoom(stoi(input));
 		Appointment::visitType type = apt->getVisitType();
 		bool hasInsurance = apt->getPatient()->hasInsurance();
-		double fee;
+		double fee = 0;
 		switch (type) {
 		case(Appointment::preventative):
 			if (hasInsurance) { fee = 0; }
@@ -437,6 +477,7 @@ void checkoutPatient() {
 			else { fee = 150.95; }
 			break;
 		}
+		cout << apt->getPatient()->getName() << " has checked out with $" << fee << endl;
 		apt->getPatient()->getAccount()->makeTransaction((fee*-1));
 		apt->getDoctor()->getAccount()->makeTransaction(fee);
 		Appointments::clearAppointment(apt);

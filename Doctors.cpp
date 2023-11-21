@@ -28,21 +28,21 @@ void Doctors::addNewDoctor(Doctor* doctor, int id) {
 
 void Doctors::showInfo() {
 	if (avaliableDoctors.size() > 0) {
-		std::cout << "\n=OPEN DOCTORS=" << endl;
+		std::cout << "=OPEN DOCTORS=" << endl;
 		for (auto& p : avaliableDoctors) {
 			p.second->showInfo();
 		}
 	}
 	else {
-		cout << "\nNO AVALIABLE DOCTORS." << endl;
+		cout << "NO AVALIABLE DOCTORS." << endl;
 	}
 	if (unavaliableDoctors.size() > 0) {
-		std::cout << "\n=BUSY DOCTORS=" << endl;
+		std::cout << "=BUSY DOCTORS=" << endl;
 		for (auto& p : unavaliableDoctors) {
 			p.second->showInfo();
 		}
 	}
-	else { cout << "\nNO DOCTORS CURRENTLY SEEING PATIENTS." << endl; }
+	else { cout << "NO DOCTORS CURRENTLY SEEING PATIENTS." << endl; }
 	
 }
 
@@ -57,7 +57,7 @@ bool Doctors::isDoctorAvaliable(int id) {
 
 Doctor* Doctors::getAvaliableDoctorById(int id) {
 	Doctor* d;
-	if (Doctors::isDoctorAvaliable(id)) { d = avaliableDoctors[id]; avaliableDoctors.erase(id); }
+	if (Doctors::isDoctorAvaliable(id)) { d = avaliableDoctors[id]; avaliableDoctors.erase(id); unavaliableDoctors[id] = d; }
 	else { d = nullptr; }
 	return d;
 }

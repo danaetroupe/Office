@@ -32,7 +32,7 @@ void ErrorHandler::checkEmail(string email) {
 }
 
 void ErrorHandler::checkAddress(string address, string zip) {
-    if (!regex_match(address, regex("[0-9]* [a-zA-Z ]*")) || !regex_match(zip, regex("[0-9]+"))) {
+    if (!regex_match(address, regex("[0-9]* [a-zA-Z .]*")) || !regex_match(zip, regex("[0-9]+"))) {
         addErrorCode(ERROR_ADDRESS_INVALID);
     }
 }

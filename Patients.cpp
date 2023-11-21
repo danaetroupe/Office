@@ -2,7 +2,7 @@
 #include <vector>
 
 vector<pair<Time*, Patient*>> waitingRoom;
-map<int, Patient*> currentAppointments;
+vector <Patient*> currentAppointments;
 set<int> patientIds;
 
 void Patients::deallocateMemory()
@@ -10,11 +10,9 @@ void Patients::deallocateMemory()
 	while (waitingRoom.size() > 0) {
 		delete waitingRoom[0].first;
 		delete waitingRoom[0].second;
-		waitingRoom.erase(waitingRoom.begin());
 	}
 	for (auto& p : currentAppointments) {
-		delete p.second;
-		currentAppointments.erase(p.first);
+		delete p;
 	}
 }
 
@@ -37,6 +35,7 @@ void Patients::showPatientInfo() {
 Patient* Patients::getFirstPatient() {
 	Patient* p = waitingRoom[0].second;
 	waitingRoom.erase(waitingRoom.begin());
+	currentAppointments.push_back(p);
 	return p;
 }
 
@@ -48,3 +47,4 @@ bool Patients::isPatients() {
 		return false;
 	}
 }
+

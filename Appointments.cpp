@@ -15,16 +15,15 @@ void Appointments::addAppointment(Appointment* appointment) {
 int Appointments::getNumberOfAppointments() {
 	return unassignedAppointments.size();
 }
-void Appointments::assignDoctor(Doctor* d) {
-	Appointment* app = unassignedAppointments[0];
-	int index = app->getRoomNumber();
+void Appointments::assignDoctor(Doctor* d, int roomNumber) {
+	Appointment* app = unassignedAppointments[roomNumber];
 	app->addDoctor(d);
-	assignedAppointments[index] = app;
-	unassignedAppointments.erase(index);
+	assignedAppointments[roomNumber] = app;
+	unassignedAppointments.erase(roomNumber);
 }
 
 void Appointments::showAppointments() {
-	std::cout << "\n=CURRENT APPOINTMENTS=" << std::endl;
+	std::cout << "=CURRENT APPOINTMENTS=" << std::endl;
 	for (auto& appt : unassignedAppointments) {
 		appt.second->showAppointmentInfo();
 	}
@@ -35,6 +34,15 @@ void Appointments::showAppointments() {
 
 bool Appointments::isAssigned(int roomNumber) {
 	if (assignedAppointments.count(roomNumber) > 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool Appointments::isUnassigned(int roomNumber) {
+	if (unassignedAppointments.count(roomNumber) > 0) {
 		return true;
 	}
 	else {

@@ -22,5 +22,7 @@ namespace Patients
 	void deallocateMemory();
 
 	bool isPatients();
+	void checkoutPatient();
+	int getSeenPatients();
 };
 

@@ -456,37 +456,46 @@ void showDoctorSummary() {
 
 void checkoutPatient() {
 	cout << "=== CHECKOUT PATIENTS ===" << endl;
-	printSeperator();
-	Appointments::showAppointments();
-	printSeperator();
-	cout << "Enter room number to checkout: " << endl;
-	string input;
-	getline(cin, input);
-	if (Appointments::isAssigned(stoi(input))) {
-		Appointment* apt = Appointments::getAppointmentFromRoom(stoi(input));
-		Appointment::visitType type = apt->getVisitType();
-		bool hasInsurance = apt->getPatient()->hasInsurance();
-		double fee = 0;
-		switch (type) {
-		case(Appointment::preventative):
-			if (hasInsurance) { fee = 0; }
-			else { fee = 29.95; }
-			break;
-		case(Appointment::sick): 
-			if (hasInsurance) { fee = 50.95; }
-			else { fee = 150.95; }
-			break;
+	while (Appointments::getNumberOfCheckoutAppointments() > 0) {
+		printSeperator();
+		Appointments::showAppointments();
+		printSeperator();
+		cout << "Enter room number to checkout: " << endl;
+		string input;
+		getline(cin, input);
+		if (Appointments::isAssigned(stoi(input))) {
+			Appointment* apt = Appointments::getAppointmentFromRoom(stoi(input));
+			Appointment::visitType type = apt->getVisitType();
+			bool hasInsurance = apt->getPatient()->hasInsurance();
+			double fee = 0;
+			switch (type) {
+			case(Appointment::preventative):
+				if (hasInsurance) { fee = 0; }
+				else { fee = 29.95; }
+				break;
+			case(Appointment::sick):
+				if (hasInsurance) { fee = 50.95; }
+				else { fee = 150.95; }
+				break;
+			}
+			cout << apt->getPatient()->getName() << " has checked out with $" << fee << endl;
+			apt->getPatient()->getAccount()->makeTransaction((fee * -1));
+			apt->getDoctor()->getAccount()->makeTransaction(fee);
+			Appointments::clearAppointment(apt);
+			checkoutPatient();
 		}
-		cout << apt->getPatient()->getName() << " has checked out with $" << fee << endl;
-		apt->getPatient()->getAccount()->makeTransaction((fee*-1));
-		apt->getDoctor()->getAccount()->makeTransaction(fee);
-		Appointments::clearAppointment(apt);
-	}
-	else {
-		cout << "ROOM NUMBER IS NOT ASSOCIATED WITH AN APPOINTMENT/DOCTOR IS NOT CURRENTLY SEEING PATIENT." << endl;
+		else {
+			cout << "ROOM NUMBER IS NOT ASSOCIATED WITH AN APPOINTMENT/DOCTOR IS NOT CURRENTLY SEEING PATIENT." << endl;
+		}
 	}
 }
 
 void closeOffice() {
-
+	FileHandler file("OfficeHistory.txt");
+	for (Doctor* d : Doctors::getAllDoctors()) {
+		string write = d->getName() + ": $" + to_string(d->getAccount()->getBalance() + '\n');
+		file.writeToFile(write);
+	}
+	string write = "Seen Patients: " + to_string(Patients::getSeenPatients());
+	file.writeToFile(write);
 }

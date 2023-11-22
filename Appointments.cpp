@@ -15,6 +15,9 @@ void Appointments::addAppointment(Appointment* appointment) {
 int Appointments::getNumberOfAppointments() {
 	return unassignedAppointments.size();
 }
+int Appointments::getNumberOfCheckoutAppointments() {
+	return assignedAppointments.size();
+}
 void Appointments::assignDoctor(Doctor* d, int roomNumber) {
 	Appointment* app = unassignedAppointments[roomNumber];
 	app->addDoctor(d);

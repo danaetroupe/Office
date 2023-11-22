@@ -4,6 +4,7 @@ namespace Appointments
 {
 	void addAppointment(Appointment*);
 	int getNumberOfAppointments();
+	int getNumberOfCheckoutAppointments();
 	void assignDoctor(Doctor*, int);
 	void showAppointments();
 
@@ -11,6 +12,7 @@ namespace Appointments
 	bool isUnassigned(int);
 	Appointment* getAppointmentFromRoom(int);
 	void clearAppointment(Appointment*);
+
 
 	void clearMemory();
 };

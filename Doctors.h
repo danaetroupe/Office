@@ -15,5 +15,6 @@ namespace Doctors
 	bool isDoctorAvaliable(int id);
 	Doctor* getAvaliableDoctorById(int id);
 	void deallocateMemory();
+	vector<Doctor*> getAllDoctors();
 };
 

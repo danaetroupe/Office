@@ -70,3 +70,14 @@ void Doctors::deallocateMemory() {
 		delete p.second;
 	}
 }
+
+vector<Doctor*> Doctors::getAllDoctors() {
+	vector<Doctor*> results;
+	for (auto& p : unavaliableDoctors) {
+		results.push_back(p.second);
+	}
+	for (auto& r : avaliableDoctors) {
+		results.push_back(r.second);
+	}
+	return results;
+}

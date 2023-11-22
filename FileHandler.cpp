@@ -33,3 +33,7 @@ vector<string> FileHandler::readFromFile(string breakpoint) {
 	}
 	return results;
 }
+
+void FileHandler::writeToFile(std::string text) {
+	file << text;
+}

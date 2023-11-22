@@ -16,7 +16,6 @@ private:
 
 public:
 	Appointment(Patient* p, int roomNumber, string visitReason, visitType type) : patient(p), roomNumber(roomNumber), visitReason(visitReason), type(type) {};
-	~Appointment();
 
 	void addDoctor(Doctor* doctor) { this->doctor = doctor; }
 	void setRoomNumber(int room) { this->roomNumber = room; }

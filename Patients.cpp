@@ -4,14 +4,14 @@
 vector<pair<Time*, Patient*>> waitingRoom;
 vector <Patient*> currentAppointments;
 set<int> patientIds;
+int seenPatients = 0;
 
 void Patients::deallocateMemory()
 {
-	while (waitingRoom.size() > 0) {
-		delete waitingRoom[0].first;
-		delete waitingRoom[0].second;
+	for (auto& pair : waitingRoom) {
+		delete pair.second;
 	}
-	for (auto& p : currentAppointments) {
+	for (Patient* p : currentAppointments) {
 		delete p;
 	}
 }
@@ -48,3 +48,10 @@ bool Patients::isPatients() {
 	}
 }
 
+void Patients::checkoutPatient() {
+	seenPatients += 1;
+}
+
+int Patients::getSeenPatients() {
+	return seenPatients;
+}
